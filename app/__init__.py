@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-def createapp():
+def create_app():
     app = Flask(__name__)
 
     config_name = os.getenv('FLASK_ENV')
@@ -14,6 +14,7 @@ def createapp():
     app.config.from_object(f)
 
     f.init_app(app)
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///example.db'
     db.init_app(app)
 
     @app.shell_context_processor

@@ -6,7 +6,7 @@ from app import create_app
 
 class TestApp(unittest.TestCase):
     def setUp(self):
-        self.app = create_app('')
+        self.app = create_app()
         self.app_context = self.app.app_context()
         self.app_context.push()
 
@@ -14,4 +14,7 @@ class TestApp(unittest.TestCase):
         self.app_context.pop()
     
     def test_app_exists(self):
-        self.assertFalse(current_app)
+        self.assertIsNotNone(current_app)
+    
+if __name__ == '__main__':
+    unittest.main()
