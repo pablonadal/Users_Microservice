@@ -8,12 +8,12 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
 
-    config_name = os.getenv('FLASK_ENV')
+    config_name = os.getenv('FLASK_ENV') 
 
-    f = config.factory(config_name if config_name else 'development')
-    app.config.from_object(f)
+    f = config.factory(config_name if config_name else 'development') #seleccciona el modo desarrollo, test o produccion para flask
+    app.config.from_object(f) #aca tambien
 
-    f.init_app(app)
+    f.init_app(app) #inicia la app con el modo seleccionado
     #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///example.db'
     db.init_app(app)
 
