@@ -1,5 +1,6 @@
 from app.models import User
 from app.repositories import UserRepository
+from app.services.security_service import SecurityService
 
 
 class UserService:
@@ -12,10 +13,10 @@ class UserService:
         self.__repo = UserRepository()
     
     def create(self, entity: User) -> User:
+        entity.password = SecurityService.generate_password(entity.password)
         return self.__repo.create(entity)
     
     def update(self, entity: User, id: int) -> User:
-        from app.services import SecurityService
         entity.password = SecurityService.generate_password(entity.password)
         return self.__repo.update(entity, id)
     

@@ -17,6 +17,14 @@ def index():
     return jsonify(response.build()), response.status_code
 
 
+@user.route('/create', methods=['POST'])
+@validate_with(UserSchema)
+def create(validated_data):
+    user = validated_data
+    response.add_status_code(201).add_message('User created!').add_data({"User created": user_schema.dump(user_service.create(user))})
+    return jsonify(response.build()), response.status_code
+
+
 @user.route('/findall', methods=['GET'])
 def find_all():
     if not user_service.find_all():
@@ -49,3 +57,13 @@ def update(validated_data, id):
 def delete(id):
     response.add_status_code(200).add_message('User deleted!').add_data({"User deleted": user_schema.dump(user_service.delete(id))})
     return jsonify(response.build()), response.status_code
+
+
+@user.route('/findbymail/<string:mail>', methods=['GET'])
+def find_by_mail(mail):
+    try:
+        response.add_status_code(200).add_message('User found!').add_data({"User": user_schema.dump(user_service.find_by_email(mail))})
+        return jsonify(response.build()), response.status_code
+    except:
+        response.add_status_code(400).add_message('User not found.').add_data()
+        return jsonify(response.build()), response.status_code
