@@ -31,3 +31,7 @@ class UserService:
     
     def find_by_email(self, email: str) -> User:
         return self.__repo.find_by_email(email)
+    
+    def check_password(self, mail: str, password: str) -> bool:
+        user = self.__repo.find_by_email(mail)
+        return SecurityService.check_password(user.password, password)

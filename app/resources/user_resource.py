@@ -67,3 +67,11 @@ def find_by_mail(mail):
     except:
         response.add_status_code(400).add_message('User not found.').add_data()
         return jsonify(response.build()), response.status_code
+
+@user.route('/checkpassword/<string:mail>/<string:password>', methods=['GET'])
+def check_password(mail, password):
+    if user_service.check_password(mail, password):
+        response.add_status_code(200).add_message('Password is correct!').add_data()
+        return jsonify(response.build()), response.status_code
+    response.add_status_code(400).add_message('Password is incorrect!').add_data()
+    return jsonify(response.build()), response.status_code
