@@ -49,12 +49,7 @@ class UserService:
         return user
     
     def find_by_email(self, email: str) -> User:
-        user = cache.get(f'{email}')
-        if not user:
-            user = self.__repo.find_by_email(email)
-            if not user:
-                return None
-            cache.set(f'{user.email}', user, timeout=50)
+        user = self.__repo.find_by_email(email)
         return user
     
     def check_password(self, mail: str, password: str) -> bool:
